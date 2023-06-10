@@ -15,6 +15,7 @@ export default class RegistrationPage {
     readonly password: Locator;
     readonly confirmPassword: Locator;
     readonly registerButton: Locator;
+    readonly firstNameError: Locator;
 
 
     constructor(page: Page) {
@@ -32,6 +33,7 @@ export default class RegistrationPage {
         this.password = page.locator('#Password');
         this.confirmPassword = page.locator('#ConfirmPassword');
         this.registerButton = page.locator('#register-button');
+        this.firstNameError = page.locator('#FirstName-error');
     }
 
     async checkGenderCheckbox(gender: string) {
@@ -51,7 +53,7 @@ export default class RegistrationPage {
     }
 
     async selectDobMonth(month: string) {
-        await this.dobMonth.selectOption({label: month});
+        await this.dobMonth.selectOption({ label: month });
     }
 
     async selectDobYear(year: string) {
@@ -80,6 +82,10 @@ export default class RegistrationPage {
 
     async clickRegisterButton() {
         await this.registerButton.click();
+    }
+
+    getFirstNameErrorMessage(): Locator {
+        return this.firstNameError;
     }
 
 }

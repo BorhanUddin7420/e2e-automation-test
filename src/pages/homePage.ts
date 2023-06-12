@@ -14,7 +14,7 @@ export default class HomePage {
     }
 
     async clickRegisterButtonFromTopBar(){
-        await this.registerTopBarButton.click();
+        await this.registerTopBarButton.click({});
     }
 
 

@@ -16,6 +16,10 @@ export default class RegistrationPage {
     readonly confirmPassword: Locator;
     readonly registerButton: Locator;
     readonly firstNameError: Locator;
+    readonly lastNameError: Locator;
+    readonly emailError: Locator;
+    readonly passwordError: Locator;
+    readonly confirmPasswordError: Locator;
 
 
     constructor(page: Page) {
@@ -34,7 +38,12 @@ export default class RegistrationPage {
         this.confirmPassword = page.locator('#ConfirmPassword');
         this.registerButton = page.locator('#register-button');
         this.firstNameError = page.locator('#FirstName-error');
+        this.lastNameError = page.locator('#LastName-error');
+        this.emailError = page.locator('#Email-error');
+        this.passwordError = page.locator('#Password-error');
+        this.confirmPasswordError = page.locator('#ConfirmPassword-error');
     }
+    
 
     async checkGenderCheckbox(gender: string) {
         (gender.toLowerCase() === 'female') ? await this.genderFemale.check() : await this.genderMale.check();
@@ -87,5 +96,22 @@ export default class RegistrationPage {
     getFirstNameErrorMessage(): Locator {
         return this.firstNameError;
     }
+
+    getLastNameErrorMessage(): Locator {
+        return this.lastNameError;
+    }
+    
+    getEmailErrorMessage(): Locator {
+        return this.emailError;
+    }
+    
+    getPasswordErrorMessage(): Locator {
+        return this.passwordError;
+    }
+    
+    getConfirmPasswordErrorMessage(): Locator {
+        return this.confirmPasswordError;
+    }
+
 
 }

@@ -2,7 +2,7 @@ import { Locator, Page } from "@playwright/test";
 
 export default class HomePage {
     readonly page: Page;
-    readonly registerTopBarButton:Locator;
+    readonly registerTopBarButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -13,11 +13,8 @@ export default class HomePage {
         await this.page.goto(testURL);
     }
 
-    async clickRegisterButtonFromTopBar(){
+    async clickRegisterButtonFromTopBar() {
         await this.registerTopBarButton.click({});
     }
-
-
-
-
+    
 }

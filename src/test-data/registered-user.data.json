@@ -1,0 +1,14 @@
+{
+    "customerDetails": {
+        "firstName": "MD. Borhan",
+        "lastName": "Sarker",
+        "email": "borhan@test.com",
+        "company": "BS23",
+        "passwords": "XXXte424@@3da",
+        "dob": {
+            "dob_day": "10",
+            "dob_month": "May",
+            "dob_year": "1927"
+        }
+    }
+}

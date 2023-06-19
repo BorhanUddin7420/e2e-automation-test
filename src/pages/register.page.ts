@@ -20,6 +20,7 @@ export default class RegistrationPage {
     readonly emailError: Locator;
     readonly passwordError: Locator;
     readonly confirmPasswordError: Locator;
+    readonly registeredEmailError: Locator;
 
 
     constructor(page: Page) {
@@ -42,6 +43,7 @@ export default class RegistrationPage {
         this.emailError = page.locator('#Email-error');
         this.passwordError = page.locator('#Password-error');
         this.confirmPasswordError = page.locator('#ConfirmPassword-error');
+        this.registeredEmailError = page.locator('div[class="message-error validation-summary-errors"] ul li')
     }
     
 
@@ -111,6 +113,10 @@ export default class RegistrationPage {
     
     getConfirmPasswordErrorMessage(): Locator {
         return this.confirmPasswordError;
+    }
+
+    getRegisteredEmailErrorMessage():Locator{
+        return this.registeredEmailError;
     }
 
 

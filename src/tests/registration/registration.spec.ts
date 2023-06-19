@@ -1,11 +1,13 @@
 import { expect, test } from "../../fixtures/base.fixture";
 import { faker } from '@faker-js/faker';
-import { registrationPageErrorList, homePageErrorList } from "../../test-data/error-messages.data";
+import { registrationPageErrorList } from "../../test-data/error-messages.data";
+import * as customerData from "../../test-data/registered-user.data.json";
+import ENV from "../../utils/env"
 
 test.describe('Customer registration for the nopCommerce public store @FE_Reg_001', () => {
 
     test.beforeEach(async ({ page }) => {
-        await page.goto('/');
+        await page.goto(ENV.BASE_URL);
     })
 
     test('The customer successfully navigate to register page from home page @SC_reg_001 @smoke', async ({ homePage, page }) => {
@@ -22,7 +24,7 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
 
     test('The customer unable to register without input any field value @SC_reg_002', async ({ page, registerPage }) => {
         await test.step('Given customer has reached the registration page.', async () => {
-            await page.goto('/register');
+            await page.goto(`${ENV.BASE_URL}/register`);
             await page.waitForURL(/.*register/, { waitUntil: 'networkidle' });
         })
 
@@ -42,13 +44,13 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
 
     test('The customer unable to register without firstname value @SC_reg_003', async ({ page, registerPage }) => {
         await test.step('Given customer has reached the registration page.', async () => {
-            await page.goto('/register');
+            await page.goto(`${ENV.BASE_URL}/register`);
             await page.waitForURL(/.*register/, { waitUntil: 'networkidle' });
         })
 
         await test.step('When customer input all required field without firstname', async () => {
             const customerBirthDate = faker.date.birthdate({ min: 18, max: 40, mode: 'age' });
-            const password = faker.internet.password();
+            const password =  faker.internet.password();
 
             await registerPage.checkGenderCheckbox('male')
             await registerPage.inputLastName(faker.person.lastName());
@@ -75,7 +77,7 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
 
     test('The customer unable to register without lastname value @SC_reg_004', async ({ page, registerPage }) => {
         await test.step('Given customer has reached the registration page.', async () => {
-            await page.goto('/register');
+            await page.goto(`${ENV.BASE_URL}/register`);
             await page.waitForURL(/.*register/, { waitUntil: 'networkidle' });
         })
 
@@ -108,7 +110,7 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
 
     test('The customer unable to register without email address @SC_reg_005', async ({ page, registerPage }) => {
         await test.step('Given customer has reached the registration page.', async () => {
-            await page.goto('/register');
+            await page.goto(`${ENV.BASE_URL}/register`);
             await page.waitForURL(/.*register/, { waitUntil: 'networkidle' });
         })
 
@@ -141,7 +143,7 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
 
     test('The customer unable to register without password @SC_reg_006', async ({ page, registerPage }) => {
         await test.step('Given customer has reached the registration page.', async () => {
-            await page.goto('/register');
+            await page.goto(`${ENV.BASE_URL}/register`);
             await page.waitForURL(/.*register/, { waitUntil: 'networkidle' });
         })
 
@@ -174,7 +176,7 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
 
     test('The customer unable to register without confirm password @SC_reg_007', async ({ page, registerPage }) => {
         await test.step('Given customer has reached the registration page.', async () => {
-            await page.goto('/register');
+            await page.goto(`${ENV.BASE_URL}/register`);
             await page.waitForURL(/.*register/, { waitUntil: 'networkidle' });
         })
 
@@ -207,7 +209,7 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
 
     test('The customer unable to register with mismatching password and Confirm Password @SC_reg_008', async ({ page, registerPage }) => {
         await test.step('Given customer has reached the registration page.', async () => {
-            await page.goto('/register');
+            await page.goto(`${ENV.BASE_URL}/register`);
             await page.waitForURL(/.*register/, { waitUntil: 'networkidle' });
         })
 
@@ -242,7 +244,7 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
 
     test('The customer unable to register with invalid email in Email field @SC_reg_009', async ({ page, registerPage }) => {
         await test.step('Given customer has reached the registration page.', async () => {
-            await page.goto('/register');
+            await page.goto(`${ENV.BASE_URL}/register`);
             await page.waitForURL(/.*register/, { waitUntil: 'networkidle' });
         })
 
@@ -277,7 +279,7 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
 
     test('The customer unable to register with invalid length of password @SC_reg_010', async ({ page, registerPage }) => {
         await test.step('Given customer has reached the registration page.', async () => {
-            await page.goto('/register');
+            await page.goto(`${ENV.BASE_URL}/register`);
             await page.waitForURL(/.*register/, { waitUntil: 'networkidle' });
         })
 
@@ -311,7 +313,7 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
 
     test('The customer successfully register with all valid user data @SC_reg_011 @smoke', async ({ page, registerPage }) => {
         await test.step('Given customer has reached the registration page.', async () => {
-            await page.goto('/register');
+            await page.goto(`${ENV.BASE_URL}/register`);
             await page.waitForURL(/.*register/, { waitUntil: 'networkidle' });
         })
 
@@ -339,6 +341,40 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
 
         await test.step('Then customer should successfully navigate to registered success page', async () => {
             await expect(page).toHaveURL(/.*registerresult/);
+        })
+
+    })
+
+    test('The customer unable to register with already registered email @SC_reg_012', async ({ page, registerPage }) => {
+        await test.step('Given customer has reached the registration page.', async () => {
+            await page.goto(`${ENV.BASE_URL}/register`);
+            await page.waitForURL(/.*register/, { waitUntil: 'networkidle' });
+        })
+
+        await test.step('When customer input all required field with already registered email', async () => {
+            const customerBirthDate = faker.date.birthdate({ min: 18, max: 40, mode: 'age' });
+            const password = faker.internet.password({ length: 12, memorable: true });
+
+            await registerPage.checkGenderCheckbox('male')
+            await registerPage.inputFirstName(faker.person.firstName());
+            await registerPage.inputLastName(faker.person.lastName());
+            await registerPage.selectDobDay(customerBirthDate.toLocaleString('default', { day: 'numeric' }));
+            await registerPage.selectDobMonth(customerBirthDate.toLocaleString('default', { month: 'long' }));
+            await registerPage.selectDobYear(customerBirthDate.toLocaleString('defaule', { year: 'numeric' }));
+            await registerPage.inputEmail(customerData.customerDetails.email);
+            await registerPage.inputCompanyName(faker.company.name());
+            await registerPage.uncheckNewsletterCheckbox();
+            await registerPage.inputPassword(password);
+            await registerPage.inputConfimrPassword(password);
+
+        })
+
+        await test.step('And customer click register button', async () => {
+            await registerPage.clickRegisterButton();
+        })
+
+        await test.step('Then customer should see an error message indicating that email address already registered', async () => {
+            await expect(registerPage.getRegisteredEmailErrorMessage()).toHaveText(registrationPageErrorList.alreadyRegisteredErrorMessage);
         })
 
     })

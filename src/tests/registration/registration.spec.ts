@@ -9,9 +9,9 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
         await page.goto(ENV.BASE_URL);
     });
 
-    test('The customer successfully navigate to register page from home page @SC_reg_001 @smoke', async ({ homePage, page }) => {
+    test('The customer successfully navigate to register page from home page @SC_reg_001 @smoke', async ({ commonPage, page }) => {
         await test.step("When customer click register button from topbar", async () => {
-            await homePage.clickRegisterButtonFromTopBar();
+            await commonPage.clickRegisterButtonFromTopBar();
             await page.waitForURL(/.*register/, { waitUntil: 'networkidle' });
         })
 

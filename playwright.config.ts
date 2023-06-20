@@ -5,10 +5,10 @@ export default defineConfig({
   testMatch: "*.spec.ts",
 
   /* Run tests in files in parallel */
-  fullyParallel: false,
+  fullyParallel: true,
 
   /* Opt out of parallel tests on CI. */
-  workers: 4,
+  // workers: 4,
 
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [

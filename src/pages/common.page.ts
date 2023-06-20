@@ -4,12 +4,13 @@ export default class CommonPage {
     readonly page: Page;
     readonly registerTopBarButton: Locator;
     readonly loginTopBarButton: Locator;
+    readonly logOutTopBarButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.registerTopBarButton = page.getByRole('link', { name: 'Register' });
-        this.loginTopBarButton = page.getByRole('link', {name: 'Log in'})
-
+        this.loginTopBarButton = page.getByRole('link', { name: 'Log in' })
+        this.logOutTopBarButton = page.getByRole('link', { name: 'Log out' })
     }
 
     async gotoHomePage(testURL: string) {
@@ -20,8 +21,12 @@ export default class CommonPage {
         await this.registerTopBarButton.click();
     }
 
-    async clickLoginButtonFromTopBar(){
+    async clickLoginButtonFromTopBar() {
         await this.loginTopBarButton.click();
     }
-    
+
+    getlogOutTopBarButton(): Locator {
+        return this.logOutTopBarButton;
+    }
+
 }

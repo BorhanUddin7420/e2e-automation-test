@@ -5,7 +5,7 @@ export default defineConfig({
   testMatch: "*.spec.ts",
 
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: false,
 
   /* Opt out of parallel tests on CI. */
   workers: 4,
@@ -29,7 +29,7 @@ export default defineConfig({
   /* Configure projects for all environment */
   projects: [
     {
-      name: 'chromium',
+      name: `chromium - ${process.env.test_env}`,
       use: { ...devices['Desktop Chrome'] },
     },
 

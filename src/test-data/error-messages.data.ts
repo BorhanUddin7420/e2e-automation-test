@@ -7,7 +7,7 @@ const registrationPageExpectedErrorList = {
     confirmPasswordErrorMessage: 'Password is required.',
     mismatchPasswordErrorMessage: 'The password and confirmation password do not match.',
     invalidEmailErrorMessage: 'Wrong email',
-    invalidPasswordLengthErrorMessage: 'must meet the following rules: must have at least 6 characters',
+    invalidPasswordLengthErrorMessage: 'must have at least 6 characters',
     alreadyRegisteredErrorMessage: 'The specified email already exists'
 }
 

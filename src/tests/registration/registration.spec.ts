@@ -49,7 +49,7 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
 
         await test.step('When customer input all required field without firstname', async () => {
             const customerBirthDate = faker.date.birthdate({ min: 18, max: 40, mode: 'age' });
-            const password =  faker.internet.password();
+            const password = faker.internet.password();
 
             await registerPage.checkGenderCheckbox('male')
             await registerPage.inputLastName(faker.person.lastName());
@@ -310,7 +310,7 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
 
     });
 
-    test.describe.serial('[Run serially]', ()=>{
+    test.describe.serial('[Run serially]', () => {
         const user = {
             email: faker.internet.email(),
         };
@@ -319,11 +319,11 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
                 await page.goto(`${ENV.BASE_URL}/register`);
                 await page.waitForURL(/.*register/, { waitUntil: 'networkidle' });
             })
-    
+
             await test.step('When customer input all required field with valid data', async () => {
                 const customerBirthDate = faker.date.birthdate({ min: 18, max: 40, mode: 'age' });
                 const password = faker.internet.password({ length: 12, memorable: true });
-    
+
                 await registerPage.checkGenderCheckbox('male')
                 await registerPage.inputFirstName(faker.person.firstName());
                 await registerPage.inputLastName(faker.person.lastName());
@@ -335,29 +335,29 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
                 await registerPage.uncheckNewsletterCheckbox();
                 await registerPage.inputPassword(password);
                 await registerPage.inputConfimrPassword(password);
-    
+
             })
-    
+
             await test.step('And customer click register button', async () => {
                 await registerPage.clickRegisterButton();
             })
-    
+
             await test.step('Then customer should successfully navigate to registered success page', async () => {
                 await expect(page).toHaveURL(/.*registerresult/);
             })
-    
+
         });
-    
+
         test('The customer unable to register with already registered email @SC_reg_012', async ({ page, registerPage }) => {
             await test.step('Given customer has reached the registration page.', async () => {
                 await page.goto(`${ENV.BASE_URL}/register`);
                 await page.waitForURL(/.*register/, { waitUntil: 'networkidle' });
             })
-    
+
             await test.step('When customer input all required field with already registered email', async () => {
                 const customerBirthDate = faker.date.birthdate({ min: 18, max: 40, mode: 'age' });
                 const password = faker.internet.password({ length: 12, memorable: true });
-    
+
                 await registerPage.checkGenderCheckbox('male')
                 await registerPage.inputFirstName(faker.person.firstName());
                 await registerPage.inputLastName(faker.person.lastName());
@@ -369,17 +369,17 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
                 await registerPage.uncheckNewsletterCheckbox();
                 await registerPage.inputPassword(password);
                 await registerPage.inputConfimrPassword(password);
-    
+
             })
-    
+
             await test.step('And customer click register button', async () => {
                 await registerPage.clickRegisterButton();
             })
-    
+
             await test.step('Then customer should see an error message indicating that email address already registered', async () => {
                 await expect(registerPage.getRegisteredEmailErrorMessage()).toHaveText(registrationPageErrorList.alreadyRegisteredErrorMessage);
             })
-    
+
         });
     });
 })

@@ -8,7 +8,7 @@ export default defineConfig({
   fullyParallel: true,
 
   /* Opt out of parallel tests on CI. */
-  workers: 4,
+  // workers: 4,
 
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
@@ -29,7 +29,7 @@ export default defineConfig({
   /* Configure projects for all environment */
   projects: [
     {
-      name: 'chromium',
+      name: `chromium - ${process.env.test_env}`,
       use: { ...devices['Desktop Chrome'] },
     },
 

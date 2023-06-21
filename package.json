@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "env:test": "cross-env test_env=test npx playwright test",
-    "env:uat": "cross-env test_env=test npx playwright test",
-    "env:prod": "cross-env test_env=test npx playwright test"
+    "env:uat": "cross-env test_env=uat npx playwright test",
+    "env:prod": "cross-env test_env=prod npx playwright test"
   },
   "keywords": [],
   "author": "",

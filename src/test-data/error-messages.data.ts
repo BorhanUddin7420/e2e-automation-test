@@ -1,5 +1,5 @@
 
-const registrationPageExpectedErrorList = {
+const RegistrationPageExpectedErrorList = {
     firstnameErrorMessage: 'First name is required.',
     lastnameErrorMessage: 'Last name is required.',
     emailErrorMessage: 'Email is required.',
@@ -7,14 +7,21 @@ const registrationPageExpectedErrorList = {
     confirmPasswordErrorMessage: 'Password is required.',
     mismatchPasswordErrorMessage: 'The password and confirmation password do not match.',
     invalidEmailErrorMessage: 'Wrong email',
-    invalidPasswordLengthErrorMessage: 'must meet the following rules: must have at least 6 characters',
+    invalidPasswordLengthErrorMessage: 'must have at least 6 characters',
     alreadyRegisteredErrorMessage: 'The specified email already exists'
 }
 
 const HomePageErrorList = {
     errorName: 'No Error'
-
 }
 
-export const registrationPageErrorList = registrationPageExpectedErrorList;
+const LoginPageErrorList = {
+    invalidCredentailsErrorMessage: 'The credentials provided are incorrect',
+    invalidEmailErrorMessage:'Please enter your email',
+    noCustomerEmailErrorMessage: 'No customer account found',
+    wrongEmailErrorMessage : 'Wrong email'
+}
+
+export const registrationPageErrorList = RegistrationPageExpectedErrorList;
 export const homePageErrorList = HomePageErrorList;
+export const loginPageErrorList = LoginPageErrorList;

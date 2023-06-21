@@ -20,7 +20,7 @@ export default defineConfig({
 
   use: {
     // Run browser in headless mode.
-    headless: false,
+    headless: true,
 
     // Capture screenshot after each test failure.
     screenshot: "only-on-failure",

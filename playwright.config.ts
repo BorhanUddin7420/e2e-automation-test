@@ -27,7 +27,7 @@ export default defineConfig({
 
   use: {
     // Run browser in headless mode.
-    headless: false,
+    headless: process.env.CI ? true : false,
 
     // Capture screenshot after each test failure.
     screenshot: "only-on-failure",

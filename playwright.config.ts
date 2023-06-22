@@ -1,7 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
 
-import path from 'path';
-
 export default defineConfig({
   // testDir: './tests',
   testMatch: ["**.spec.ts"],
@@ -20,21 +18,17 @@ export default defineConfig({
 
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-    ['html', {
-      open: 'never',
-      outputFolder: './playwright-report'
-    }],
-
-    ['list', {
-      printSteps: true
-    }]
+    ['html', { open: 'on-failure' }],
+    ['@skilbourn/playwright-report-summary', { outputFile: './playwright-report/custom-summary.txt' }],
+    [process.env.CI ? 'github' : 'list', { printSteps: true }]
   ],
-  
 
   globalSetup: "src/utils/global-setup.ts",
-  // globalSetup: path.join(__dirname, '../../global-setup.ts'),
 
   use: {
+    // Run browser in headless mode.
+    headless: process.env.CI ? true : false,
+
     // Capture screenshot after each test failure.
     screenshot: "only-on-failure",
 

@@ -12,8 +12,9 @@ export default defineConfig({
 
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-    ['html', { open: 'on-failure'}],
-    ['list', { printSteps: true }]
+    ['html', { open: 'on-failure' }],
+    ['@skilbourn/playwright-report-summary', { outputFile: './playwright-report/custom-summary.txt' }],
+    [process.env.CI ? 'github' : 'list', { printSteps: true }]
   ],
 
   globalSetup: "src/utils/global-setup.ts",

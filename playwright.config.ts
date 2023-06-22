@@ -3,7 +3,7 @@ import { defineConfig, devices } from "@playwright/test";
 import path from 'path';
 
 export default defineConfig({
-  testDir: './test',
+  // testDir: './tests',
   testMatch: ["**.spec.ts"],
 
   /* Run tests in files in parallel */

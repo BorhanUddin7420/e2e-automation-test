@@ -1,35 +1,51 @@
 import { defineConfig, devices } from "@playwright/test";
 
+import path from 'path';
+
 export default defineConfig({
-  // testDir: './src/tests/registration/',
-  testMatch: "*.spec.ts",
+  // testDir: './tests',
+  testMatch: ["**.spec.ts"],
 
   /* Run tests in files in parallel */
   fullyParallel: true,
+
+  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  forbidOnly: !!process.env.CI,
+
+  /* Retry on CI only */
+  retries: process.env.CI ? 1 : 1,
 
   /* Opt out of parallel tests on CI. */
   // workers: 4,
 
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-    ['html', { open: 'on-failure'}],
-    ['list', { printSteps: true }]
+    ['html', {
+      open: 'never',
+      outputFolder: './playwright-report'
+    }],
+
+    ['list', {
+      printSteps: true
+    }]
   ],
+  
 
   globalSetup: "src/utils/global-setup.ts",
+  // globalSetup: path.join(__dirname, '../../global-setup.ts'),
 
   use: {
-    // Run browser in headless mode.
-    headless: false,
-
     // Capture screenshot after each test failure.
     screenshot: "only-on-failure",
+
+    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    trace: 'on-first-retry'
   },
 
   /* Configure projects for all environment */
   projects: [
     {
-      name: `chromium - ${process.env.test_env}`,
+      name: `${process.env.test_env} - chrome`,
       use: { ...devices['Desktop Chrome'] },
     },
 

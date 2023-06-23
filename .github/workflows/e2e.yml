@@ -38,11 +38,30 @@ jobs:
         env:
           MS_TEAMS_WEBHOOK_URL: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
         run: |
-          message=$(cat playwright-report/custom-summary.txt)
+          content=$(cat playwright-report/custom-summary.txt)
+          IFS=',' read -ra lines <<< "$content"
+
           card='{
             "type": "MessageCard",
             "themeColor": "0078D7",
-            "title": "Test Run Summery",
-            "text": "'"$message"'",
+            "title": "Test Results",
+            "sections": [
+              {
+                "facts": ['
+
+          for line in "${lines[@]}"; do
+            IFS=':' read -r label value <<< "$line"
+            label="${label//[$'\t\r\n ']/}"
+            value="${value//[$'\t\r\n ']/}"
+            card+="{
+                  \"name\": \"$label\",
+                  \"value\": \"$value\"
+                },"
+          done
+
+          card="${card%,}]"
+          card+='
+              ]
+            }
           }'
           curl -H "Content-Type: application/json" -d "$card" $MS_TEAMS_WEBHOOK_URL

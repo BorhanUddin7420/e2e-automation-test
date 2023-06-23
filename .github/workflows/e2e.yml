@@ -34,44 +34,35 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
-      - name: Send test results to MS Teams
+      - name: Send custom message to MS Teams
         env:
           MS_TEAMS_WEBHOOK_URL: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
         run: |
           content=$(cat playwright-report/custom-summary.txt)
-          IFS='?' read -ra sections <<< "$content"
-        
+          IFS=',' read -ra lines <<< "$content"
+
           card='{
             "type": "MessageCard",
             "themeColor": "0078D7",
-            "title": "Test Results Summery",
+            "title": "Test Results",
             "sections": [
               {
                 "facts": ['
-        
-          for section in "${sections[@]}"; do
-            IFS=$'\n' read -ra lines <<< "$section"
-        
-            for line in "${lines[@]}"; do
-              IFS=':' read -r label value <<< "$line"
-              label="${label//[$'\t\r\n ']/}"
-              value="${value//[$'\t\r\n ']/}"
-              card+="{
-                    \"name\": \"$label\",
-                    \"value\": \"$value\"
-                  },"
-            done
-        
-            card="${card%,}"
-            card+='
-                ],
-                "separator": true
-              },'
+
+          for line in "${lines[@]}"; do
+            IFS=':' read -r label value <<< "$line"
+            label="${label//[$'\t\r\n ']/}"
+            value="${value//[$'\t\r\n ']/}"
+            card+="{
+                  \"name\": \"$label\",
+                  \"value\": \"$value\"
+                },"
           done
-        
-          card="${card%,'
-              }
-            ]
-          }'"
-        
+
+          card="${card%,}]"
+          card+='
+              ]
+            }
+          }'
+
           curl -H "Content-Type: application/json" -d "$card" $MS_TEAMS_WEBHOOK_URL

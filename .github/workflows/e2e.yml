@@ -39,7 +39,8 @@ jobs:
         env: 
           MS_TEAMS_WEBHOOK_URL: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
         run: |
-          curl -H "Content-Type: application/json" -d '{"text": "Playwright tests completed!"}' $MS_TEAMS_WEBHOOK_URL
+          message=$(cat playwright-report/custom-summary.txt)
+          curl -H "Content-Type: application/json" -d "{\"text\": \"$message\"}" $MS_TEAMS_WEBHOOK_URL
           
           
 

@@ -39,9 +39,8 @@ jobs:
           MS_TEAMS_WEBHOOK_URL: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
         run: |
           message=$(cat playwright-report/custom-summary.txt)
-          content="${message//'%'/'%25'}"
-          content="${content//$'\n'/'\\n'}"
-          content="${content//$'\r'/'\\r'}"
+          content="${message//$'\n'/'\n'}"
+          content="${content//$'\r'/'\r'}"
 
           payload='{
             "@type": "MessageCard",
@@ -50,7 +49,7 @@ jobs:
             "summary": "Test Results",
             "sections": [
               {
-                "activityTitle": "Test Summery",
+                "activityTitle": "Test Results",
                 "activitySubtitle": "",
                 "activityImage": "",
                 "facts": [

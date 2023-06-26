@@ -42,23 +42,28 @@ jobs:
           content=$(echo "$message" | awk 'BEGIN{ RS=","; ORS="\n" } 1')
 
           payload='{
-            "@type": "MessageCard",
-            "@context": "https://schema.org/extensions",
-            "themeColor": "00FF00",
-            "summary": `TEST RUN COMPLETED IN - ${env.ENVIRONMENT_NAME}`,
-            "sections": [
+            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+            "type": "AdaptiveCard",
+            "version": "1.3",
+            "body": [
               {
-                "activityTitle": `TEST RUN COMPLETED IN - ${env.ENVIRONMENT_NAME}`,
-                "activitySubtitle": "",
-                "activityImage": "",
+                "type": "TextBlock",
+                "text": "Test Results Summery - ",
+                "weight": "Bolder",
+                "size": "Large"
+              },
+              {
+                "type": "FactSet",
                 "facts": [
                   {
-                    "name": "TEST SUMMERY",
+                    "title": "Message",
                     "value": "'"$content"'"
                   }
                 ]
               }
-            ]
+            ],
+            "color": "00FF00",
+            "actions": []
           }'
 
           curl -X POST -H "Content-Type: application/json" -d "$payload" "$MS_TEAMS_WEBHOOK_URL"

@@ -44,16 +44,16 @@ jobs:
           payload='{
             "@type": "MessageCard",
             "@context": "https://schema.org/extensions",
-            "themeColor": "0078D7",
-            "summary": "Test Results",
+            "themeColor": "00FF00",
+            "summary": `TEST RUN COMPLETED IN - ${env.ENVIRONMENT_NAME}`,
             "sections": [
               {
-                "activityTitle": "Test Results",
+                "activityTitle": `TEST RUN COMPLETED IN - ${env.ENVIRONMENT_NAME}`,
                 "activitySubtitle": "",
                 "activityImage": "",
                 "facts": [
                   {
-                    "name": "Message",
+                    "name": "TEST SUMMERY",
                     "value": "'"$content"'"
                   }
                 ]

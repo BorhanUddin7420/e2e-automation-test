@@ -38,32 +38,29 @@ jobs:
         env:
           MS_TEAMS_WEBHOOK_URL: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
         run: |
-          content=$(cat playwright-report/custom-summary.txt)
-          IFS=$'\n' read -rd '' -a lines <<< "$content"
+          message=$(cat playwright-report/custom-summary.txt)
+          content="${message//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
 
-          card='{
-            "type": "MessageCard",
+          payload='{
+            "@type": "MessageCard",
+            "@context": "https://schema.org/extensions",
             "themeColor": "0078D7",
-            "title": "Test Results",
+            "summary": "Test Results",
             "sections": [
               {
-                "facts": ['
-
-          for line in "${lines[@]}"; do
-            label="${line%%:*}"
-            value="${line#*:}"
-            label="${label//[$'\t\r\n ']/}"
-            value="${value//[$'\t\r\n ']/}"
-            card+="{
-                  \"name\": \"$label\",
-                  \"value\": \"$value\"
-                },"
-          done
-
-          card="${card%,}]"
-          card+='
-              ]
-            }
+                "activityTitle": "Test Results",
+                "activitySubtitle": "",
+                "activityImage": "",
+                "facts": [
+                  {
+                    "name": "Message",
+                    "value": "'"$content"'"
+                  }
+                ]
+              }
+            ]
           }'
 
-          curl -H "Content-Type: application/json" -d "$card" "$MS_TEAMS_WEBHOOK_URL"
+          curl -X POST -H "Content-Type: application/json" -d "$payload" "$MS_TEAMS_WEBHOOK_URL"

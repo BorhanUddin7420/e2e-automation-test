@@ -45,10 +45,10 @@ jobs:
             "@type": "MessageCard",
             "@context": "https://schema.org/extensions",
             "themeColor": "00FF00",
-            "summary": `TEST RUN COMPLETED IN - ${env.ENVIRONMENT_NAME}`,
+            "summary": "TEST RUN COMPLETED",
             "sections": [
               {
-                "activityTitle": `TEST RUN COMPLETED IN - ${env.ENVIRONMENT_NAME}`,
+                "activityTitle": "TEST SUMMERY",
                 "activitySubtitle": "",
                 "activityImage": "",
                 "facts": [

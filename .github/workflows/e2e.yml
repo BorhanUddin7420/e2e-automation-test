@@ -39,7 +39,7 @@ jobs:
           MS_TEAMS_WEBHOOK_URL: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
         run: |
           content=$(cat playwright-report/custom-summary.txt)
-          IFS=',' read -ra lines <<< "$content"
+          IFS=$'\n' read -rd '' -a lines <<< "$content"
 
           card='{
             "type": "MessageCard",
@@ -48,9 +48,10 @@ jobs:
             "sections": [
               {
                 "facts": ['
-          
+
           for line in "${lines[@]}"; do
-            IFS=':' read -r label value <<< "$line"
+            label="${line%%:*}"
+            value="${line#*:}"
             label="${label//[$'\t\r\n ']/}"
             value="${value//[$'\t\r\n ']/}"
             card+="{
@@ -58,11 +59,11 @@ jobs:
                   \"value\": \"$value\"
                 },"
           done
-          
+
           card="${card%,}]"
           card+='
               ]
             }
           }'
-          
+
           curl -H "Content-Type: application/json" -d "$card" "$MS_TEAMS_WEBHOOK_URL"

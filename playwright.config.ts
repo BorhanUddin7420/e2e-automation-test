@@ -20,7 +20,8 @@ export default defineConfig({
   reporter: [
     ['html', { open: 'on-failure' }],
     ['@skilbourn/playwright-report-summary', { outputFile: './playwright-report/custom-summary.txt' }],
-    [process.env.CI ? 'github' : 'list', { printSteps: true }]
+    [process.env.CI ? 'github' : 'list', { printSteps: true }],
+    ['json', {outputFile: './playwright-report/result.json'}]
   ],
 
   globalSetup: "src/utils/global-setup.ts",

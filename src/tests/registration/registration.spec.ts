@@ -310,7 +310,7 @@ test.describe('Customer registration for the nopCommerce public store @FE_Reg_00
 
     });
 
-    test.describe.serial('[Run serially]', () => {
+    test.describe.serial.only('[Run serially]', () => {
         const user = {
             email: faker.internet.email(),
         };

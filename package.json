@@ -6,7 +6,8 @@
   "scripts": {
     "env:test": "cross-env test_env=test npx playwright test",
     "env:uat": "cross-env test_env=uat npx playwright test",
-    "env:prod": "cross-env test_env=prod npx playwright test"
+    "env:prod": "cross-env test_env=prod npx playwright test",
+    "env:local": "cross-env test_env=local npx playwright test"
   },
   "keywords": [],
   "author": "",

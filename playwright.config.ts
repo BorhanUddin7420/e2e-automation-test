@@ -11,7 +11,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
 
   /* Retry on CI only */
-  retries: process.env.CI ? 1 : 1,
+  // retries: process.env.CI ? 1 : 1,
 
   /* Opt out of parallel tests on CI. */
   // workers: 4,
@@ -27,7 +27,7 @@ export default defineConfig({
 
   use: {
     // Run browser in headless mode.
-    headless: process.env.CI ? true : false,
+    // headless: process.env.CI ? false : false,
 
     // Capture screenshot after each test failure.
     screenshot: "only-on-failure",

@@ -23,7 +23,7 @@ jobs:
       - name: Install browsers
         run: npx playwright install chromium
       - name: Run e2e tests
-        run: npm run env:test
+        run: npm run env:local
       - uses: actions/upload-artifact@v3
         if: always()
         with:
